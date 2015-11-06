@@ -60,6 +60,9 @@ class ZabbixAPI(object):
         """Convenience method for calling user.authenticate and storing the resulting auth token
            for further commands.
            If use_authenticate is set, it uses the older (Zabbix 1.8) authentication command"""
+        # Disable warnings if there is a self signed certificate
+        if self.session.verify == False:
+            requests.packages.urllib3.disable_warnings()
 
         # If we have an invalid auth token, we are not allowed to send a login
         # request. Clear it before trying.
